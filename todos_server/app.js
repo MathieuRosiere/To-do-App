@@ -8,9 +8,6 @@ const PORT = 3000;
 app.use(express.json());
 app.use(cors());
 
-let todo = { title: "test05", details: "test05" };
-let id = 1;
-
 // ------- Connection to database ---------
 
 const connection = mysql.createConnection({
@@ -53,10 +50,11 @@ app.post("/add-todo", (request, response) => {
   );
 });
 
-app.delete("/delete-todo", (req, res) => {
+app.delete("/delete-todo/:id", (request, response) => {
+  const id = request.params.id;
   connection.query(`DELETE FROM Todo WHERE id = ${id}`, (err, result) => {
     if (err) throw err;
-    res.send(`Todo with id = ${id} deleted`);
+    response.send(`Todo with id = ${id} deleted`);
   });
 });
 
