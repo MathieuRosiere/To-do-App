@@ -1,18 +1,29 @@
 <script setup>
+import ModalEdit from "@/components/ModalEdit.vue";
 import axios from "axios";
-import { onMounted } from "vue";
+import { onMounted, onUpdated } from "vue";
 import { ref } from "vue";
 
 const todosDetails = ref([]);
+const modalDisplay = ref("");
 
 onMounted(async () => {
   const result = await axios.get("http://localhost:3000/get-todo");
   todosDetails.value = result.data;
 });
 
+onUpdated(async () => {
+  const result = await axios.get("http://localhost:3000/get-todo");
+  todosDetails.value = result.data;
+});
+
 const deleteTodo = async (id) => {
-    await axios.delete(`http://localhost:3000/delete-todo/${id}`);
+  await axios.delete(`http://localhost:3000/delete-todo/${id}`);
 };
+
+const startEditHandler = () => {
+    modalDisplay.value = "edit";
+}
 </script>
 
 <template>
@@ -21,6 +32,8 @@ const deleteTodo = async (id) => {
     <p>{{ t.title }}</p>
     <p>{{ t.details }}</p>
     <button @click="deleteTodo(t.id)">Delete</button>
+    <button @click="startEditHandler">Edit</button>
+    <ModalEdit v-if="modalDisplay === 'edit'" :todoID="t.id" @closeModal="modalDisplay = ''"/>
   </div>
 </template>
 

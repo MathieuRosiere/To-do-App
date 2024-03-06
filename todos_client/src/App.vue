@@ -1,11 +1,12 @@
 <script setup>
-import TodoForm from "@/views/TodoForm.vue"
-import TodosDisplay from "./views/TodosDisplay.vue";
+import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
- <TodoForm/>
- <TodosDisplay/>
+<RouterLink to="/">Home</RouterLink>
+<RouterLink to="/add">Add</RouterLink>
+<RouterLink to="/list">List</RouterLink>
+<RouterView></RouterView>
 </template>
 
 <style scoped>

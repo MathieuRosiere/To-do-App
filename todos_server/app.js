@@ -30,8 +30,7 @@ connection.connect((err) => {
 app.get("/get-todo", (req, res) => {
   connection.query("SELECT * FROM Todo", (err, result) => {
     if (err) throw err;
-    // const data = JSON.parse(result)
-    // console.log(data);
+
     res.send(result);
   });
 });
@@ -43,8 +42,8 @@ app.post("/add-todo", (request, response) => {
     (err, result) => {
       if (err) {
         return console.log(err);
-        } else {
-        return console.log('newTodo added to database.');;
+      } else {
+        return console.log("newTodo added to database.");
       }
     }
   );
@@ -53,9 +52,26 @@ app.post("/add-todo", (request, response) => {
 app.delete("/delete-todo/:id", (request, response) => {
   const id = request.params.id;
   connection.query(`DELETE FROM Todo WHERE id = ${id}`, (err, result) => {
-    if (err) throw err;
-    response.send(`Todo with id = ${id} deleted`);
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`Todo with id = ${id} deleted`);
+    }
   });
 });
 
-app.listen(PORT, () => console.log(`Le serveur ecoute sur la port ${PORT}.`));
+app.put("/edit-todo/:id", (request, response) => {
+  const id = request.params.id;
+  const updatedTodo = request.body.updatedTodo;
+  connection.query(
+    `UPDATE Todo SET title = '${updatedTodo.title}', details = '${updatedTodo.details}' WHERE id = ${id}`, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Todo updated');
+      }
+    }
+  );
+});
+
+app.listen(PORT, () => console.log(`Le serveur ecoute sur le port ${PORT}.`));
