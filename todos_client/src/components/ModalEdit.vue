@@ -19,12 +19,12 @@ const todoUpdateHandler = async () => {
   <div class="modal-bg" @click.self="$emit('closeModal')">
     <div class="modal-content">
       <form action="#" @submit.prevent="todoUpdateHandler">
-        <div class="label&input">
-          <label for="title">Title :</label>
+        <div class="label-input">
+          <label for="title">New Title :</label>
           <input v-model="updatedTodo.title" type="text" id="title" />
         </div>
-        <div class="label&input">
-          <label for="desc">Description :</label>
+        <div class="label-input">
+          <label for="desc">New Description :</label>
           <textarea
             v-model="updatedTodo.details"
             name="desc"
@@ -55,5 +55,18 @@ const todoUpdateHandler = async () => {
         box-sizing: border-box;
         border-radius: 1rem;
         aspect-ratio: 1 / 1;
-        background-color: hsl(0, 0%, 95%);
-    }</style>
+        background-color: var(--primary);
+    }
+    
+    form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+}
+
+.label-input {
+  display: flex;
+  flex-flow: column nowrap;
+}
+    
+    </style>

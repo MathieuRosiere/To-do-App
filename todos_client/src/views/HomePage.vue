@@ -1,7 +1,19 @@
 <script setup></script>
 
 <template>
-    <h1>To Do List</h1>
+  <main>
+    <h1>Welcome !</h1>
+  </main>
 </template>
 
-<style scoped></style>
+
+
+<style scoped>
+
+main {
+    font-size: 2rem;
+    display: grid;
+    place-content: center;
+}
+
+</style>

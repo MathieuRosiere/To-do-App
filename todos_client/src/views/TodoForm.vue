@@ -1,6 +1,6 @@
 <script setup>
 import axios from "axios";
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
 
 const newTodo = reactive({
   title: "",
@@ -16,23 +16,46 @@ const todoPostHandler = async () => {
 </script>
 
 <template>
+<main>
+  <h3>Add a new todo...</h3>
   <form action="#" @submit.prevent="todoPostHandler">
-    <div class="label&input">
+    <div class="label-input">
       <label for="title">Title :</label>
       <input v-model="newTodo.title" type="text" id="title" />
     </div>
-    <div class="label&input">
+    <div class="label-input">
       <label for="desc">Description :</label>
       <textarea
         v-model="newTodo.details"
         name="desc"
         id="desc"
         cols="30"
-        rows="10"
+        rows="5"
       ></textarea>
     </div>
     <button>Submit</button>
   </form>
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+}
+
+.label-input {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+</style>

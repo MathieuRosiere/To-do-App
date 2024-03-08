@@ -27,14 +27,33 @@ const startEditHandler = () => {
 </script>
 
 <template>
-  <div v-for="t in todosDetails">
-    <p>{{ t.id }}</p>
+  <main>
+  <div class="todo" v-for="t in todosDetails">
     <p>{{ t.title }}</p>
     <p>{{ t.details }}</p>
     <button @click="deleteTodo(t.id)">Delete</button>
     <button @click="startEditHandler">Edit</button>
     <ModalEdit v-if="modalDisplay === 'edit'" :todoID="t.id" @closeModal="modalDisplay = ''"/>
   </div>
+  </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: auto;
+}
+
+div.todo {
+  display: flex;
+  align-items: center;
+}
+
+p {
+  margin-right: 5px;
+}
+</style>
