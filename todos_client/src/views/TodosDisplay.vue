@@ -12,10 +12,10 @@ onMounted(async () => {
   todosDetails.value = result.data;
 });
 
-onUpdated(async () => {
-  const result = await axios.get("http://localhost:3000/get-todo");
-  todosDetails.value = result.data;
-});
+// onUpdated(async () => {
+//   const result = await axios.get("http://localhost:3000/get-todo");
+//   todosDetails.value = result.data;
+// });
 
 const deleteTodo = async (id) => {
   await axios.delete(`http://localhost:3000/delete-todo/${id}`);

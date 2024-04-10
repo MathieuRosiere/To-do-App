@@ -1,6 +1,6 @@
-create database Todos;
+create database todos;
 
-use Todos;
+use todos;
 
 create table Todo(
 	id int not null auto_increment primary key,
