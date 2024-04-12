@@ -1,9 +1,11 @@
 <script setup>
+import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
 import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
   <h1 class="main-title">To-do Manager</h1>
+  <VueQueryDevtools/>
   <RouterView id="router-view"></RouterView>
   <nav class="navbar">
     <RouterLink to="/">Home | </RouterLink>
