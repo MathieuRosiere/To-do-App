@@ -3,9 +3,10 @@ import mysql from "mysql2";
 import cors from "cors";
 
 const app = express();
-const PORT = 3000;
+const PORT = 7777;
 
 // Middlewares
+
 
 app.use(express.json());
 app.use(cors());
@@ -14,8 +15,8 @@ app.use(cors());
 
 const connection = mysql.createConnection({
   host: "127.0.0.1",
-  user: "colon",
-  password: "admincolon",
+  user: "root",
+  password: "root",
   database: "todos",
 });
 
@@ -28,6 +29,7 @@ connection.connect((err) => {
 });
 
 // ------ CRUD ---------
+
 
 app.get("/get-todo", (req, res) => {
   connection.query("SELECT * FROM Todo", (err, result) => {
@@ -76,4 +78,8 @@ app.put("/edit-todo/:id", (request, response) => {
   );
 });
 
-app.listen(PORT, () => console.log(`Le serveur ecoute sur le port ${PORT}.`));
+app.get('/', (req, res) => {
+  return res.json({hello: "world"});
+})
+
+app.listen(PORT, () => console.log(`Le serveur ecoute sur http://localhost:${PORT}`));

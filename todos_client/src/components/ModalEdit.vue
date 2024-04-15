@@ -1,18 +1,30 @@
 <script setup>
 import { reactive } from "vue";
 import axios from "axios";
+import { useTodoStore } from "@/stores/todoStore";
+import { storeToRefs } from "pinia";
 
-const props = defineProps(['todoID']);
+const store = useTodoStore();
+const { todos } = storeToRefs(store);
+
+
+const props = defineProps(['todo']);
 const emits = defineEmits(['closeModal'])
 
 const updatedTodo = reactive({
-  title: "",
-  details: "",
+  title: props.todo.title,
+  details: props.todo.details
 });
 
+// const todoUpdateHandler = () => {
+//   props.todo.title = updatedTodo.title;
+//   props.todo.details = updatedTodo.details
+// }
+
 const todoUpdateHandler = async () => {
-   await axios.put(`http://localhost:3000/edit-todo/${props.todoID}` , { updatedTodo });
+   await axios.put(`http://localhost:7777/edit-todo/${props.todo.id}` , { updatedTodo });
 };
+
 </script>
 
 <template>
@@ -30,7 +42,7 @@ const todoUpdateHandler = async () => {
             name="desc"
             id="desc"
             cols="30"
-            rows="10"
+            rows="5"
           ></textarea>
         </div>
         <button>Submit</button>
@@ -53,9 +65,10 @@ const todoUpdateHandler = async () => {
         height: 600px;
         padding: 5%;
         box-sizing: border-box;
+        border: solid 4px var(--font-color-white);
         border-radius: 1rem;
         aspect-ratio: 1 / 1;
-        background-color: var(--primary);
+        background-color: var(--body-bg-color);
     }
     
     form {
@@ -68,5 +81,8 @@ const todoUpdateHandler = async () => {
   display: flex;
   flex-flow: column nowrap;
 }
-    
+
+textarea {
+  resize: none;
+}
     </style>
