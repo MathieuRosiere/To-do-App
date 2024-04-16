@@ -1,36 +1,16 @@
 <script setup>
 import ModalEdit from "@/components/ModalEdit.vue";
-import axios from "axios";
-import { onMounted, onUpdated } from "vue";
 import { ref, Transition } from "vue";
 import { useTodoStore } from "@/stores/todoStore";
 import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 const store = useTodoStore();
 const { todos } = storeToRefs(store);
-
-const todosDetails = ref([]);
+const { deleteTodo } = store;
+const router = useRouter();
 
 const modalDisplay = ref("");
-
-onMounted(async () => {
-  const result = await axios.get("http://localhost:7777/get-todo");
-  console.log(result);
-  todosDetails.value = result.data;
-});
-
-// onUpdated(async () => {
-//   const result = await axios.get("http://localhost:3000/get-todo");
-//   todosDetails.value = result.data;
-// });
-
-// const deleteTodo = (id) => {
-//   todos.value = todos.value.filter((t) => t.id !== id);
-// };
-
-const deleteTodo = async (id) => {
-  await axios.delete(`http://localhost:7777/delete-todo/${id}`);
-};
 
 const startEditHandler = () => {
   modalDisplay.value = "edit";
@@ -39,12 +19,19 @@ const startEditHandler = () => {
 
 <template>
   <main>
-    <div class="todo" v-for="t in todosDetails">
+    <div v-if="todos.length === 0" class="empty-list">
+      <p>Aucune Todo n'a été enregistrée.</p>
+      <button @click="router.replace({ path: '/add' })">
+        Ajouter une Todo
+      </button>
+    </div>
+    <div v-else class="todo" v-for="t in todos">
       <p>{{ t.title }}</p>
       <p>{{ t.details }}</p>
       <button @click="deleteTodo(t.id)">Delete</button>
       <button @click="startEditHandler">Edit</button>
-      <Transition name = 'modal'>
+
+      <Transition name="modal">
         <ModalEdit
           v-if="modalDisplay === 'edit'"
           :todo="t"
@@ -62,6 +49,15 @@ main {
   justify-content: flex-start;
   align-items: center;
   overflow: auto;
+}
+
+div.empty-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 div.todo {

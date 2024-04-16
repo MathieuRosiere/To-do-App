@@ -1,47 +1,29 @@
 <script setup>
-import axios from "axios";
-import { ref, reactive } from "vue";
+import { reactive } from "vue";
 import { useTodoStore } from "@/stores/todoStore";
-import { storeToRefs } from "pinia";
-import { v4 as newId } from "uuid";
-
-const dialog = document.getElementById("myDialog");
 
 const store = useTodoStore();
-const { todos } = storeToRefs(store);
-
-
+const { postTodo } = store;
 
 const newTodo = reactive({
   title: "",
   details: "",
 });
 
-// Ajout de la nouvelle todo au store.
-// const todoPostHandler = () => {
-//   const Todo = { id: newId(), ...newTodo };
-//   todos.value.push(Todo);
-//   console.log(todos.value);
-//   showSuccess.value = true;
-//   newTodo.title = "";
-//   newTodo.details = "";
-// };
-
-const todoPostHandler = async () => {
-  await axios.post("http://localhost:7777/add-todo", {
-    newTodo,
-  });  
+const postTodoHandler = () => {
+  postTodo(newTodo);
+  newTodo.title = "";
+  newTodo.details = "";
 };
-
 
 </script>
 
 <template>
   <main>
-    <h3>Add a new todo...</h3>
-    <form action="#" @submit.prevent="todoPostHandler">
+    <h3>Ajouter une nouvelle todo...</h3>
+    <form action="#" @submit.prevent="postTodoHandler">
       <div class="label-input">
-        <label for="title">Title :</label>
+        <label for="title">Titre :</label>
         <input v-model="newTodo.title" type="text" id="title" />
       </div>
       <div class="label-input">
@@ -54,7 +36,7 @@ const todoPostHandler = async () => {
           rows="5"
         ></textarea>
       </div>
-      <button @click="dialogHandler()">Submit</button>
+      <button>Valider</button>
     </form>
   </main>
 </template>

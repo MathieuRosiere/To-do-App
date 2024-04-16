@@ -1,14 +1,25 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+import { onMounted } from "vue";
+import { useTodoStore } from "./stores/todoStore";
+import { storeToRefs } from "pinia";
+
+const store = useTodoStore();
+const { fetchTodos } = store;
+
+onMounted( () => {
+  fetchTodos()
+});
+
 </script>
 
 <template>
   <h1 class="main-title">To-do Manager</h1>
   <RouterView id="router-view"></RouterView>
   <nav class="navbar">
-    <RouterLink class="router" to="/">Home | </RouterLink>
-    <RouterLink class="router" to="/add">Add Todo | </RouterLink>
-    <RouterLink class="router" to="/list">List</RouterLink>
+    <RouterLink class="router" to="/">Accueil | </RouterLink>
+    <RouterLink class="router" to="/add">Ajouter | </RouterLink>
+    <RouterLink class="router" to="/list">Lister</RouterLink>
   </nav>
 </template>
 
