@@ -1,21 +1,27 @@
 <script setup>
-import { reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { useTodoStore } from "@/stores/todoStore";
 
 const store = useTodoStore();
 const { postTodo } = store;
 
+
 const newTodo = reactive({
   title: "",
   details: "",
+  date: ""
 });
 
+// console.log(Date.parse('2024-04-17T15:15'));
+
+// console.log(formatteddate.value);
+
 const postTodoHandler = () => {
+  console.log(newTodo);
   postTodo(newTodo);
   newTodo.title = "";
   newTodo.details = "";
 };
-
 </script>
 
 <template>
@@ -35,6 +41,15 @@ const postTodoHandler = () => {
           cols="30"
           rows="5"
         ></textarea>
+      </div>
+      <div>
+        <label for="date">Date limite :</label>
+        <input
+          type="datetime-local"
+          name="date"
+          id="date"
+          v-model.date="newTodo.date"
+        />
       </div>
       <button>Valider</button>
     </form>

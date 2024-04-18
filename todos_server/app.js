@@ -40,7 +40,7 @@ app.get("/get-todo", (req, res) => {
 app.post("/add-todo", (request, response) => {
   const newTodo = request.body.newTodo;
   connection.query(
-    `INSERT INTO Todo (title, details) VALUES ('${newTodo.title}','${newTodo.details}')`,
+    `INSERT INTO Todo (title, details, date_limite) VALUES ('${newTodo.title}','${newTodo.details}','${newTodo.date}')`,
     (err, result) => {
       if (err) {
         return console.log(err);

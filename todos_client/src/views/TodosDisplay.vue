@@ -28,6 +28,7 @@ const startEditHandler = () => {
     <div v-else class="todo" v-for="t in todos">
       <p>{{ t.title }}</p>
       <p>{{ t.details }}</p>
+      <p>{{ t.date_limite }}</p>
       <button @click="deleteTodo(t.id)">Delete</button>
       <button @click="startEditHandler">Edit</button>
 
