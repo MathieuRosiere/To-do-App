@@ -29,6 +29,10 @@ connection.connect((err) => {
 
 // ------ CRUD ---------
 
+// TODO : - modifier gestion des erreurs
+//        - modifier path en /todos (au pluriel car ID)
+//        - créer des models
+
 app.get("/get-todo", (req, res) => {
   connection.query("SELECT * FROM Todo", (err, result) => {
     if (err) throw err;
