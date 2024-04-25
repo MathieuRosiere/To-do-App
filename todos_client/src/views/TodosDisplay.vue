@@ -7,13 +7,16 @@ import { useRouter } from "vue-router";
 
 const store = useTodoStore();
 const { todos } = storeToRefs(store);
-const { deleteTodo } = store;
+const { removeTodo } = store;
 const router = useRouter();
 
 const modalDisplay = ref("");
 
-const startEditHandler = () => {
+const TodoToEdit = ref();
+
+const startEditHandler = (todo) => {
   modalDisplay.value = "edit";
+  TodoToEdit.value = todo;
 };
 </script>
 
@@ -25,30 +28,31 @@ const startEditHandler = () => {
         Ajouter une Todo
       </button>
     </div>
-    <div v-else class="todo" v-for="t in todos">
-      <p>{{ t.title }}</p>
-      <p>{{ t.details }}</p>
-      <p>{{ t.date_limite }}</p>
-      <button @click="deleteTodo(t.id)">Delete</button>
-      <button @click="startEditHandler">Edit</button>
-
-      <Transition name="modal">
-        <ModalEdit
-          v-if="modalDisplay === 'edit'"
-          :todo="t"
-          @closeModal="modalDisplay = ''"
-        />
-      </Transition>
+    <div v-else class="card" v-for="todo in todos">
+      <p>{{ todo.title }}</p>
+      <p>{{ todo.date_limite }}</p>
+      <div class="buttons">
+        <button @click="removeTodo(todo.id)">Supprimer</button>
+        <button @click="startEditHandler(todo)">Details</button>
+      </div>
     </div>
+
+    <Transition name="modal">
+      <ModalEdit
+        v-if="modalDisplay === 'edit'"
+        :todo="TodoToEdit"
+        @closeModal="modalDisplay = ''"
+      />
+    </Transition>
   </main>
 </template>
 
 <style scoped>
 main {
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-start;
-  align-items: center;
+  flex-flow: row wrap;
+  justify-content: center;
+  gap: 2%;
   overflow: auto;
 }
 
@@ -61,9 +65,20 @@ div.empty-list {
   align-items: center;
 }
 
-div.todo {
+div.card {
+  width: 15%;
+  height: 30%;
+  border: 2px solid var(--font-color-white);
+  border-radius: 1rem 0 1rem 0;
+  padding: 5px;
   display: flex;
+  flex-flow: column nowrap;
   align-items: center;
+  justify-content: space-between;
+
+  > div.buttons > button {
+    padding: 0 4px 0 4px;
+  }
 }
 
 p {

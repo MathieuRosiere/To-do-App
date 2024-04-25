@@ -1,9 +1,9 @@
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { reactive } from "vue";
 import { useTodoStore } from "@/stores/todoStore";
 
 const store = useTodoStore();
-const { postTodo } = store;
+const { addTodo } = store;
 
 
 const newTodo = reactive({
@@ -12,13 +12,9 @@ const newTodo = reactive({
   date: ""
 });
 
-// console.log(Date.parse('2024-04-17T15:15'));
-
-// console.log(formatteddate.value);
-
-const postTodoHandler = () => {
+const addTodoHandler = () => {
   console.log(newTodo);
-  postTodo(newTodo);
+  addTodo(newTodo);
   newTodo.title = "";
   newTodo.details = "";
 };
@@ -27,10 +23,10 @@ const postTodoHandler = () => {
 <template>
   <main>
     <h3>Ajouter une nouvelle todo...</h3>
-    <form action="#" @submit.prevent="postTodoHandler">
+    <form action="#" @submit.prevent="addTodoHandler">
       <div class="label-input">
         <label for="title">Titre :</label>
-        <input v-model="newTodo.title" type="text" id="title" />
+        <input v-model="newTodo.title" type="text" id="title" required/>
       </div>
       <div class="label-input">
         <label for="desc">Description :</label>
@@ -40,6 +36,7 @@ const postTodoHandler = () => {
           id="desc"
           cols="30"
           rows="5"
+          required
         ></textarea>
       </div>
       <div>
@@ -49,6 +46,7 @@ const postTodoHandler = () => {
           name="date"
           id="date"
           v-model.date="newTodo.date"
+          required
         />
       </div>
       <button>Valider</button>

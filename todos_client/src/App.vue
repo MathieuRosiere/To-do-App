@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from "vue-router";
 import { onMounted } from "vue";
 import { useTodoStore } from "./stores/todoStore";
-import { storeToRefs } from "pinia";
+
 
 const store = useTodoStore();
 const { fetchTodos } = store;

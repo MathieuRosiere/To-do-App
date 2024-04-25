@@ -30,10 +30,9 @@ connection.connect((err) => {
 // ------ CRUD ---------
 
 // TODO : - modifier gestion des erreurs
-//        - modifier path en /todos (au pluriel car ID)
 //        - créer des models
 
-app.get("/get-todo", (req, res) => {
+app.get("/todos", (req, res) => {
   connection.query("SELECT * FROM Todo", (err, result) => {
     if (err) throw err;
     console.log(" GET request ==> Todos fetched");
@@ -41,50 +40,37 @@ app.get("/get-todo", (req, res) => {
   });
 });
 
-app.post("/add-todo", (request, response) => {
+app.post("/todos", (request, response) => {
   const newTodo = request.body.newTodo;
   connection.query(
     `INSERT INTO Todo (title, details, date_limite) VALUES ('${newTodo.title}','${newTodo.details}','${newTodo.date}')`,
     (err, result) => {
-      if (err) {
-        return console.log(err);
-      } else {
-        response.send("todo added to database");        
-      }
+      if (err) throw err;
+      response.send("todo added to database");
     }
   );
 });
 
-app.delete("/delete-todo/:id", (request, response) => {
+app.delete("/todos/:id", (request, response) => {
   const id = request.params.id;
   connection.query(`DELETE FROM Todo WHERE id = ${id}`, (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(`Todo with id = ${id} deleted`);
-      response.send('Todo deleted');
-    }
+    if (err) throw err;
+    console.log(`Todo with id = ${id} deleted`);
+    response.send("Todo deleted");
   });
 });
 
-app.put("/edit-todo/:id", (request, response) => {
+app.put("/todos/:id", (request, response) => {
   const id = request.params.id;
   const updatedTodo = request.body.updatedTodo;
   connection.query(
     `UPDATE Todo SET title = '${updatedTodo.title}', details = '${updatedTodo.details}' WHERE id = ${id}`,
     (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Todo updated");
-        response.send('Todo updated');
-      }
+      if (err) throw err;
+      console.log("Todo updated");
+      response.send("Todo updated");
     }
   );
-});
-
-app.get("/", (req, res) => {
-  return res.json({ hello: "world" });
 });
 
 app.listen(PORT, () =>

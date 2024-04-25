@@ -3,7 +3,7 @@ import { reactive } from "vue";
 import { useTodoStore } from "@/stores/todoStore";
 
 const store = useTodoStore();
-const { updateTodo } = store;
+const { editTodo } = store;
 
 const props = defineProps(["todo"]);
 const emits = defineEmits(["closeModal"]);
@@ -17,7 +17,7 @@ const updatedTodo = reactive({
 <template>
   <div class="modal-bg" @click.self="$emit('closeModal')">
     <div class="modal-content">
-      <form action="#" @submit.prevent="updateTodo(props.todo.id, updatedTodo)">
+      <form action="#" @submit.prevent="editTodo(props.todo.id, updatedTodo)">
         <div class="label-input">
           <label for="title">Modifier Titre :</label>
           <input v-model="updatedTodo.title" type="text" id="title" />

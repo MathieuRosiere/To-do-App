@@ -8,16 +8,16 @@ export const useTodoStore = defineStore("todoStore", () => {
 
   const fetchTodos = async () => {
     try {
-      const result = await axios.get(`${API_BASE_URL}/get-todo`);
+      const result = await axios.get(`${API_BASE_URL}/todos`);
       todos.value = result.data;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const postTodo = async (newTodo) => {
+  const addTodo = async (newTodo) => {
     try {
-      const result = await axios.post(`${API_BASE_URL}/add-todo`, { newTodo });
+      const result = await axios.post(`${API_BASE_URL}/todos`, { newTodo });
       if (result.status === 200) {
         fetchTodos();
       }
@@ -26,24 +26,24 @@ export const useTodoStore = defineStore("todoStore", () => {
     }
   };
 
-  const deleteTodo = async (id) => {
+  const removeTodo = async (id) => {
     try {
-      const result = await axios.delete(`${API_BASE_URL}/delete-todo/${id}`);
+      const result = await axios.delete(`${API_BASE_URL}/todos/${id}`);
       if (result.status === 200) {
-        todos.value = todos.value.filter((t) => t.id != id);
+        todos.value = todos.value.filter((todo) => todo.id != id);
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const updateTodo = async (id, updatedTodo) => {
+  const editTodo = async (id, updatedTodo) => {
     try {
-      const result = await axios.put(`${API_BASE_URL}/edit-todo/${id}`, {
+      const result = await axios.put(`${API_BASE_URL}/todos/${id}`, {
         updatedTodo,
       });
       if (result.status === 200) {
-        const todoToEdit = todos.value.find((t) => t.id === id);
+        const todoToEdit = todos.value.find((todo) => todo.id === id);
         todoToEdit.title = updatedTodo.title;
         todoToEdit.details = updatedTodo.details;
       }
@@ -52,5 +52,5 @@ export const useTodoStore = defineStore("todoStore", () => {
     }
   };
 
-  return { todos, fetchTodos, deleteTodo, updateTodo, postTodo };
+  return { todos, fetchTodos, removeTodo, editTodo, addTodo };
 });
