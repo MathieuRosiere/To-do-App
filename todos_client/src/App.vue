@@ -16,10 +16,12 @@ onMounted( () => {
 <template>
   <h1 class="main-title">To-do Manager</h1>
   <RouterView id="router-view"></RouterView>
-  <nav class="navbar">
-    <RouterLink class="router" to="/">Accueil | </RouterLink>
-    <RouterLink class="router" to="/add">Ajouter | </RouterLink>
-    <RouterLink class="router" to="/list">Lister</RouterLink>
+  <nav class="navbar display-flex-row">
+    <RouterLink class="router" to="/">Accueil</RouterLink>
+    <div class="separator">|</div>
+    <RouterLink class="router" to="/add">Ajouter</RouterLink>
+    <div class="separator">|</div>
+    <RouterLink class="router" to="/list">Liste</RouterLink>
   </nav>
 </template>
 
@@ -33,6 +35,13 @@ onMounted( () => {
 .navbar {
   font-size: 2rem;
   margin-bottom: 20px; 
+
+  > .router.router-link-active{
+    color: var(--body-bg-color);
+    background-color: var(--font-color-white);
+    border-radius: 1rem;
+    padding: 0 5px 0 5px;
+  }
 }
 
 .router {
@@ -50,4 +59,10 @@ onMounted( () => {
   color: var(--font-color-white);
   overflow: hidden;
 }
+
+.separator{
+  color: var(--font-color-white);
+  margin: 0 0.5rem 0 0.5rem;
+}
+
 </style>

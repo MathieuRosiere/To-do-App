@@ -11,13 +11,18 @@ const emits = defineEmits(["closeModal"]);
 const updatedTodo = reactive({
   title: props.todo.title,
   details: props.todo.details,
+  date_limite: props.todo.date_limite
 });
 </script>
 
 <template>
   <div class="modal-bg" @click.self="$emit('closeModal')">
-    <div class="modal-content">
-      <form action="#" @submit.prevent="editTodo(props.todo.id, updatedTodo)">
+    <div class="modal-content display-flex-col">
+      <form
+        class="display-flex-col"
+        action="#"
+        @submit.prevent="editTodo(props.todo.id, updatedTodo)"
+      >
         <div class="label-input">
           <label for="title">Modifier Titre :</label>
           <input v-model="updatedTodo.title" type="text" id="title" />
@@ -32,9 +37,13 @@ const updatedTodo = reactive({
             rows="5"
           ></textarea>
         </div>
+        <div class="label-input">
+        <label for="date">Modifier date :</label>
+        <input id="date" type="datetime-local" v-model="updatedTodo.date_limite">
+        </div>
         <button>Valider</button>
       </form>
-      <button @click="$emit('closeModal')">Fermer</button>
+      <button class="btn-close" @click="$emit('closeModal')">Fermer</button>
     </div>
   </div>
 </template>
@@ -49,6 +58,7 @@ const updatedTodo = reactive({
 }
 
 .modal-content {
+  justify-content: space-between;
   height: 600px;
   padding: 5%;
   box-sizing: border-box;
@@ -56,14 +66,22 @@ const updatedTodo = reactive({
   border-radius: 1rem;
   aspect-ratio: 1 / 1;
   background-color: var(--body-bg-color);
-  display: flex;
-  flex-flow: column nowrap;
 }
 
 form {
-  display: flex;
-  flex-flow: column nowrap;
   gap: 5px;
+
+  > button {
+    width: 60%;
+    align-self: center;
+  }
+}
+
+.btn-close {
+  background-color: var(--btn-close);
+  margin-top: 0.5rem;
+  width: 40%;
+  align-self: flex-end;
 }
 
 .label-input {

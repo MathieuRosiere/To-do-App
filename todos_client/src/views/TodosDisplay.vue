@@ -18,21 +18,29 @@ const startEditHandler = (todo) => {
   modalDisplay.value = "edit";
   TodoToEdit.value = todo;
 };
+
+
 </script>
 
 <template>
-  <main>
-    <div v-if="todos.length === 0" class="empty-list">
+  <main class="display-flex-row">
+    <div v-if="todos.length === 0" class="empty-list display-flex-col">
       <p>Aucune Todo n'a été enregistrée.</p>
       <button @click="router.replace({ path: '/add' })">
         Ajouter une Todo
       </button>
     </div>
-    <div v-else class="card" v-for="todo in todos">
+    <div v-else class="card display-flex-col" v-for="todo in todos">
       <p>{{ todo.title }}</p>
       <p>{{ todo.date_limite }}</p>
-      <div class="buttons">
-        <button @click="removeTodo(todo.id)">Supprimer</button>
+      <div>
+        <label for="done">Terminé :</label>
+        <input type="checkbox" name="done" id="done" v-model="todo.done"  />
+      </div>
+      <div class="display-flex-row">
+        <button :disabled="!todo.done" class="btn-delete" @click="removeTodo(todo.id)">
+          Supprimer
+        </button>
         <button @click="startEditHandler(todo)">Details</button>
       </div>
     </div>
@@ -49,8 +57,6 @@ const startEditHandler = (todo) => {
 
 <style scoped>
 main {
-  display: flex;
-  flex-flow: row wrap;
   justify-content: center;
   gap: 2%;
   overflow: auto;
@@ -59,8 +65,6 @@ main {
 div.empty-list {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 }
@@ -71,13 +75,15 @@ div.card {
   border: 2px solid var(--font-color-white);
   border-radius: 1rem 0 1rem 0;
   padding: 5px;
-  display: flex;
-  flex-flow: column nowrap;
   align-items: center;
   justify-content: space-between;
 
-  > div.buttons > button {
-    padding: 0 4px 0 4px;
+  > div {
+    gap: 5px;
+
+    > .btn-delete {
+      background-color: var(--btn-close);
+    }
   }
 }
 

@@ -13,7 +13,6 @@ const newTodo = reactive({
 });
 
 const addTodoHandler = () => {
-  console.log(newTodo);
   addTodo(newTodo);
   newTodo.title = "";
   newTodo.details = "";
@@ -23,7 +22,7 @@ const addTodoHandler = () => {
 <template>
   <main>
     <h3>Ajouter une nouvelle todo...</h3>
-    <form action="#" @submit.prevent="addTodoHandler">
+    <form action="#" class="display-flex-col" @submit.prevent="addTodoHandler">
       <div class="label-input">
         <label for="title">Titre :</label>
         <input v-model="newTodo.title" type="text" id="title" required/>
@@ -39,7 +38,7 @@ const addTodoHandler = () => {
           required
         ></textarea>
       </div>
-      <div>
+      <div class="label-input">
         <label for="date">Date limite :</label>
         <input
           type="datetime-local"
@@ -67,10 +66,14 @@ main {
 form {
   width: 40%;
   height: 70%;
-  display: flex;
-  flex-flow: column nowrap;
   gap: 5px;
   overflow: auto;
+
+  > button {
+    width: 60%;
+    margin-top: 1rem;
+    align-self: center;
+  }
 }
 
 .label-input {
