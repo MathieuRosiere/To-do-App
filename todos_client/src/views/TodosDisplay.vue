@@ -18,27 +18,32 @@ const startEditHandler = (todo) => {
   modalDisplay.value = "edit";
   TodoToEdit.value = todo;
 };
-
-
 </script>
 
 <template>
-  <main class="display-flex-row">
+  <div class="wrapper display-flex-row">
+    <!-- Conditionnal rendering : If todos[] is empty -->
     <div v-if="todos.length === 0" class="empty-list display-flex-col">
       <p>Aucune Todo n'a été enregistrée.</p>
       <button @click="router.replace({ path: '/add' })">
         Ajouter une Todo
       </button>
     </div>
+
+    <!-- Conditionnal rendering : If todos[] !empty -->
     <div v-else class="card display-flex-col" v-for="todo in todos">
-      <p>{{ todo.title }}</p>
-      <p>{{ todo.date_limite }}</p>
-      <div>
+      <p class="p-title">{{ todo.title }}</p>
+      <p>{{ todo.date_limite.replace("T", " ") }}</p>
+      <div class="checkbox display-flex-row">
         <label for="done">Terminé :</label>
-        <input type="checkbox" name="done" id="done" v-model="todo.done"  />
+        <input type="checkbox" name="done" id="done" v-model="todo.done" />
       </div>
       <div class="display-flex-row">
-        <button :disabled="!todo.done" class="btn-delete" @click="removeTodo(todo.id)">
+        <button
+          :disabled="!todo.done"
+          class="btn-delete"
+          @click="removeTodo(todo.id)"
+        >
           Supprimer
         </button>
         <button @click="startEditHandler(todo)">Details</button>
@@ -52,14 +57,14 @@ const startEditHandler = (todo) => {
         @closeModal="modalDisplay = ''"
       />
     </Transition>
-  </main>
+  </div>
 </template>
 
 <style scoped>
-main {
+.wrapper {
+  flex-wrap: wrap;
   justify-content: center;
   gap: 2%;
-  overflow: auto;
 }
 
 div.empty-list {
@@ -70,10 +75,11 @@ div.empty-list {
 }
 
 div.card {
+  background-color: var(--darker-bg-color);
+  box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
   width: 15%;
   height: 30%;
-  border: 2px solid var(--font-color-white);
-  border-radius: 1rem 0 1rem 0;
   padding: 5px;
   align-items: center;
   justify-content: space-between;
@@ -84,11 +90,24 @@ div.card {
     > .btn-delete {
       background-color: var(--btn-close);
     }
+
+    .btn-delete:disabled {
+      background-color: var(--btn-close);
+      opacity: 0.5;
+    }
+  }
+
+  > div.checkbox {
+    gap: 5px;
   }
 }
 
-p {
-  margin-right: 5px;
+.p-title {
+  font-weight: bold;
+}
+
+.p-title::first-letter {
+  text-transform: capitalize;
 }
 
 .modal-enter-active,

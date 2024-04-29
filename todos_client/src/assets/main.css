@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 :root {
-  --font-color-white: hsl(0, 0%, 95%);
-  --body-bg-color: hsl(0, 0%, 5%);
-  --font-color-black: #050315;
-  --primary: #0000ff;
-  --secondary: #dedcff;
-  --accent: #433bff;
+  --darker-bg-color: #e4e2e2;
+  --body-bg-color: #f2f2f2;
+  --font-color-black: #0d0d0d;
+  --primary: #0554f2;
+  --secondary: #076df2;
+  --accent: #3889f2;
   --btn-close: rgb(211, 88, 88);
 }
 
@@ -15,6 +15,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins";
+  color: var(--font-color-black);
 }
 
 body {
@@ -33,14 +34,14 @@ div#app {
 }
 
 button {
-  background-color: var(--secondary);
+  background-color: var(--accent);
   border: none;
   border-radius: 0.5rem;
   padding: 3px 7px 3px 7px;
 }
 
 button:hover {
-  box-shadow: 0px 0px 10px 0px hsl(0, 0%, 95%);
+  box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .display-flex-row {
@@ -49,6 +50,15 @@ button:hover {
 }
 
 .display-flex-col {
-    display: flex;
-    flex-flow: column nowrap;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.content-center {
+  display: grid;
+  place-content: center;
+}
+
+.font-bold {
+  font-weight: bold;
 }

@@ -11,7 +11,7 @@ const emits = defineEmits(["closeModal"]);
 const updatedTodo = reactive({
   title: props.todo.title,
   details: props.todo.details,
-  date_limite: props.todo.date_limite
+  date_limite: props.todo.date_limite,
 });
 </script>
 
@@ -38,8 +38,12 @@ const updatedTodo = reactive({
           ></textarea>
         </div>
         <div class="label-input">
-        <label for="date">Modifier date :</label>
-        <input id="date" type="datetime-local" v-model="updatedTodo.date_limite">
+          <label for="date">Modifier date :</label>
+          <input
+            id="date"
+            type="datetime-local"
+            v-model="updatedTodo.date_limite"
+          />
         </div>
         <button>Valider</button>
       </form>

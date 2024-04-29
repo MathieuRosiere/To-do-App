@@ -1,68 +1,104 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import { onMounted } from "vue";
+import { onMounted, Transition } from "vue";
 import { useTodoStore } from "./stores/todoStore";
-
 
 const store = useTodoStore();
 const { fetchTodos } = store;
 
-onMounted( () => {
-  fetchTodos()
+onMounted(() => {
+  fetchTodos();
 });
-
 </script>
 
 <template>
-  <h1 class="main-title">To-do Manager</h1>
-  <RouterView id="router-view"></RouterView>
-  <nav class="navbar display-flex-row">
-    <RouterLink class="router" to="/">Accueil</RouterLink>
-    <div class="separator">|</div>
-    <RouterLink class="router" to="/add">Ajouter</RouterLink>
-    <div class="separator">|</div>
-    <RouterLink class="router" to="/list">Liste</RouterLink>
-  </nav>
+  <header class="display-flex-row">
+    <h1 class="main-title">To-do Manager</h1>
+    <nav class="navbar display-flex-row">
+      <RouterLink class="router" to="/">Accueil</RouterLink>
+      <RouterLink class="router" to="/add">Ajouter</RouterLink>  
+      <RouterLink class="router" to="/list">Liste</RouterLink>
+    </nav>
+  </header>
+  <main>
+    <RouterView id="router-view" v-slot="{ Component}">
+    <Transition name="switch-view" mode="out-in">
+    <component :is="Component"></component>
+    </Transition>
+    </RouterView>
+  </main>
+  <footer class="content-center">
+    <h3>Powered by LeColonDeJack</h3>
+  </footer>
 </template>
 
 <style scoped>
+header {
+  height: 10%;
+  width: 100%;
+  align-items: center;
+  background-color: var(--darker-bg-color);
+  border-bottom: 2px solid var(--accent);
+}
+
 .main-title {
-  margin-top: 20px;
-  font-size: 3.5rem;
-  color: var(--font-color-white);
+  font-size: 3rem;
+  color: var(--primary);
+  margin-left: 30px;
+  margin-right: 75px;
 }
 
 .navbar {
-  font-size: 2rem;
-  margin-bottom: 20px; 
+  font-size: 1.3rem;
 
-  > .router.router-link-active{
-    color: var(--body-bg-color);
-    background-color: var(--font-color-white);
-    border-radius: 1rem;
-    padding: 0 5px 0 5px;
+  > .router.router-link-active {
+    color: var(--secondary);
   }
 }
 
 .router {
   text-decoration: none;
-  color: var(--font-color-white);
+  color: var(--font-color-black);
+  margin-right: 2rem;
+  opacity: 0.75;
+  transition: 300ms;
+}
+
+.router:hover {
+  opacity: 1;
+}
+
+main {
+  width: 100%;
+  height: 80%;
+  background-color: var(--body-bg-color);
 }
 
 #router-view {
-  height: 70%;
-  width: 70%;
-  border: 4px solid var(--font-color-white);
-  border-radius: 35px 0px 35px 0px;
-  background-color: var(--body-bg-color);
+  height: 100%;
+  width: 100%;
   padding: 10px;
-  color: var(--font-color-white);
-  overflow: hidden;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color:var(--secondary) var(--darker-bg-color) ;
+  padding: 1rem 5rem 1rem 5rem;
 }
 
-.separator{
-  color: var(--font-color-white);
-  margin: 0 0.5rem 0 0.5rem;
+.switch-view-enter-active,
+.switch-view-leave-active {
+  transition: opacity 0.4s ease;
 }
 
+.switch-view-enter-from,
+.switch-view-leave-to {
+  opacity:0;
+}
+
+
+footer {
+  width: 100%;
+  height: 10%;
+  background-color: var(--darker-bg-color);
+  border-top: 2px solid var(--accent);
+}
 </style>
