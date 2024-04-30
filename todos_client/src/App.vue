@@ -15,16 +15,19 @@ onMounted(() => {
   <header class="display-flex-row">
     <h1 class="main-title">To-do Manager</h1>
     <nav class="navbar display-flex-row">
-      <RouterLink class="router" to="/">Accueil</RouterLink>
-      <RouterLink class="router" to="/add">Ajouter</RouterLink>  
+      <div class="router-underline">
+        <RouterLink class="router" to="/">Accueil</RouterLink>
+        <div class="underline"></div>
+      </div>
+      <RouterLink class="router" to="/add">Ajouter</RouterLink>
       <RouterLink class="router" to="/list">Liste</RouterLink>
     </nav>
   </header>
   <main>
-    <RouterView id="router-view" v-slot="{ Component}">
-    <Transition name="switch-view" mode="out-in">
-    <component :is="Component"></component>
-    </Transition>
+    <RouterView id="router-view" v-slot="{ Component }">
+      <Transition name="switch-view" mode="out-in">
+        <component :is="Component"></component>
+      </Transition>
     </RouterView>
   </main>
   <footer class="content-center">
@@ -41,6 +44,12 @@ header {
   border-bottom: 2px solid var(--accent);
 }
 
+main {
+  width: 100%;
+  height: 80%;
+  background-color: var(--body-bg-color);
+}
+
 .main-title {
   font-size: 3rem;
   color: var(--primary);
@@ -51,7 +60,8 @@ header {
 .navbar {
   font-size: 1.3rem;
 
-  > .router.router-link-active {
+  > div,
+  .router.router-link-active {
     color: var(--secondary);
   }
 }
@@ -61,17 +71,30 @@ header {
   color: var(--font-color-black);
   margin-right: 2rem;
   opacity: 0.75;
-  transition: 300ms;
 }
 
-.router:hover {
+/* .router:hover {
   opacity: 1;
+} */
+
+.underline {
+  background-color: black;
+  height: 5px;
+  margin-right: 2rem;
+  width: 0;
 }
 
-main {
-  width: 100%;
-  height: 80%;
-  background-color: var(--body-bg-color);
+/* .router-underline {
+  transition: 1000ms ease;
+} */
+
+.router-underline:hover {
+  > .router {
+    opacity: 1;
+  }
+  > .underline {
+    width: 100%;
+  }
 }
 
 #router-view {
@@ -80,7 +103,7 @@ main {
   padding: 10px;
   overflow: auto;
   scrollbar-width: thin;
-  scrollbar-color:var(--secondary) var(--darker-bg-color) ;
+  scrollbar-color: var(--secondary) var(--darker-bg-color);
   padding: 1rem 5rem 1rem 5rem;
 }
 
@@ -91,9 +114,8 @@ main {
 
 .switch-view-enter-from,
 .switch-view-leave-to {
-  opacity:0;
+  opacity: 0;
 }
-
 
 footer {
   width: 100%;
