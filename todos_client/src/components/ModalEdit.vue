@@ -45,7 +45,7 @@ const updatedTodo = reactive({
             v-model="updatedTodo.date_limite"
           />
         </div>
-        <button>Valider</button>
+        <button class="btn-valid">Valider</button>
       </form>
       <button class="btn-close" @click="$emit('closeModal')">Fermer</button>
     </div>
@@ -65,7 +65,6 @@ const updatedTodo = reactive({
   justify-content: space-between;
   height: 600px;
   padding: 5%;
-  box-sizing: border-box;
   border: solid 4px var(--font-color-white);
   border-radius: 1rem;
   aspect-ratio: 1 / 1;

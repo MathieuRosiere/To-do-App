@@ -13,15 +13,22 @@ onMounted(() => {
 
 <template>
   <header class="display-flex-row">
-    <h1 class="main-title">To-do Manager</h1>
+    <h1 class="main-title content-center">To-do Manager</h1>
     <nav class="navbar display-flex-row">
       <div class="router-underline">
         <RouterLink class="router" to="/">Accueil</RouterLink>
         <div class="underline"></div>
       </div>
-      <RouterLink class="router" to="/add">Ajouter</RouterLink>
-      <RouterLink class="router" to="/list">Liste</RouterLink>
+      <div class="router-underline">
+        <RouterLink class="router" to="/add">Ajouter</RouterLink>
+        <div class="underline"></div>
+      </div>
+      <div class="router-underline">
+        <RouterLink class="router" to="/list">Liste</RouterLink>
+        <div class="underline"></div>
+      </div>
     </nav>
+    <img src="/img/logo.png" alt="logo">
   </header>
   <main>
     <RouterView id="router-view" v-slot="{ Component }">
@@ -42,6 +49,12 @@ header {
   align-items: center;
   background-color: var(--darker-bg-color);
   border-bottom: 2px solid var(--accent);
+
+  > img {
+    height: 80%;
+    position: relative;
+    left: 10rem;
+  }
 }
 
 main {
@@ -51,42 +64,35 @@ main {
 }
 
 .main-title {
+  flex: 0.25;
   font-size: 3rem;
   color: var(--primary);
-  margin-left: 30px;
-  margin-right: 75px;
 }
 
 .navbar {
+  flex: 0.20;
   font-size: 1.3rem;
+  justify-content: space-around;
 
-  > div,
-  .router.router-link-active {
+  > div .router.router-link-active {
     color: var(--secondary);
+    opacity: 1;
   }
 }
 
 .router {
   text-decoration: none;
   color: var(--font-color-black);
-  margin-right: 2rem;
   opacity: 0.75;
+  transition: opacity 500ms ease;
 }
-
-/* .router:hover {
-  opacity: 1;
-} */
 
 .underline {
-  background-color: black;
+  background-color: var(--secondary);
   height: 5px;
-  margin-right: 2rem;
-  width: 0;
+  width: 0%;
+  transition: width 500ms ease;
 }
-
-/* .router-underline {
-  transition: 1000ms ease;
-} */
 
 .router-underline:hover {
   > .router {

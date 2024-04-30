@@ -25,7 +25,7 @@ const startEditHandler = (todo) => {
     <!-- Conditionnal rendering : If todos[] is empty -->
     <div v-if="todos.length === 0" class="empty-list display-flex-col">
       <p>Aucune Todo n'a été enregistrée.</p>
-      <button @click="router.replace({ path: '/add' })">
+      <button class="btn-valid" @click="router.replace({ path: '/add' })">
         Ajouter une Todo
       </button>
     </div>
@@ -38,15 +38,17 @@ const startEditHandler = (todo) => {
         <label for="done">Terminé :</label>
         <input type="checkbox" name="done" id="done" v-model="todo.done" />
       </div>
-      <div class="display-flex-row">
+      <div class="display-flex-row buttons">
         <button
           :disabled="!todo.done"
-          class="btn-delete"
+          class="btn-close"
           @click="removeTodo(todo.id)"
         >
           Supprimer
         </button>
-        <button @click="startEditHandler(todo)">Details</button>
+        <button class="btn-valid" @click="startEditHandler(todo)">
+          Details
+        </button>
       </div>
     </div>
 
@@ -63,8 +65,12 @@ const startEditHandler = (todo) => {
 <style scoped>
 .wrapper {
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2%;
+}
+
+:nth-child(odd of div.card) {
+  background-color:  #d3caca;
 }
 
 div.empty-list {
@@ -76,30 +82,37 @@ div.empty-list {
 
 div.card {
   background-color: var(--darker-bg-color);
-  box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 10px 10px 2px 0px rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
   width: 15%;
   height: 30%;
-  padding: 5px;
+  padding: 10px;
   align-items: center;
   justify-content: space-between;
+  transition: transform 300ms ease;
 
   > div {
     gap: 5px;
 
-    > .btn-delete {
-      background-color: var(--btn-close);
-    }
-
-    .btn-delete:disabled {
+    .btn-close:disabled {
       background-color: var(--btn-close);
       opacity: 0.5;
+      box-shadow: none;
+      transform: none;
     }
   }
 
   > div.checkbox {
     gap: 5px;
   }
+
+  > div.buttons {
+    gap: 1rem;
+  }
+}
+
+div.card:hover {
+  transform: scale(1.1);
 }
 
 .p-title {

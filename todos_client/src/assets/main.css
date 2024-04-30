@@ -7,7 +7,9 @@
   --primary: #0554f2;
   --secondary: #076df2;
   --accent: #3889f2;
+  --btn-shadow: #3889f288;
   --btn-close: rgb(211, 88, 88);
+  --btn-close-shadow: rgba(211, 88, 88, 0.5);
 }
 
 * {
@@ -33,16 +35,31 @@ div#app {
   align-items: center;
 }
 
-button {
+.btn-valid {
   background-color: var(--accent);
   border: none;
   border-radius: 0.5rem;
   padding: 3px 7px 3px 7px;
+  transition: transform 350ms ease, box-shadow 350ms ease;
 }
 
-button:hover {
-  box-shadow: 10px 10px 4px 0px rgba(0, 0, 0, 0.1);
+.btn-valid:hover {
+  box-shadow: 5px 5px 0px 0px var(--btn-shadow);
+  transform: scale(1.1);
 }
+
+.btn-close {
+  background-color: var(--btn-close);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 3px 7px 3px 7px;
+  transition: transform 350ms ease, box-shadow 350ms ease;
+}
+
+.btn-close:hover {
+    box-shadow: 5px 5px 0px 0px var(--btn-close-shadow);
+    transform: scale(1.1);
+  }
 
 .display-flex-row {
   display: flex;

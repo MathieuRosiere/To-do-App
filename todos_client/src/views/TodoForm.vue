@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { useTodoStore } from "@/stores/todoStore";
 
 const store = useTodoStore();
@@ -25,7 +25,7 @@ const addTodoHandler = () => {
     <form action="#" class="display-flex-col" @submit.prevent="addTodoHandler">
       <div class="label-input">
         <label for="title">Titre :</label>
-        <input v-model="newTodo.title" type="text" id="title" required/>
+        <input v-model="newTodo.title" type="text" id="title" minlength="4" required/>
       </div>
       <div class="label-input">
         <label for="desc">Description :</label>
@@ -35,6 +35,7 @@ const addTodoHandler = () => {
           id="desc"
           cols="30"
           rows="5"
+          minlength="4"
           required
         ></textarea>
       </div>
@@ -48,7 +49,7 @@ const addTodoHandler = () => {
           required
         />
       </div>
-      <button>Valider</button>
+      <button class="btn-valid">Valider</button>
     </form>
   </main>
 </template>
